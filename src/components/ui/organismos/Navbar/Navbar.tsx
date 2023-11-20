@@ -1,11 +1,12 @@
 import Button from "../../atomos/Button/Button";
 import IconButton from "../../atomos/IconButton/IconButton";
+import logo from "../../../../assets/imgs/Logo.png";
 
 const Navbar = () => {
   return (
     <div className="flex items-center justify-between bg-[#9DBEBB]">
       <div className="flex p-4 gap-4 items-center">
-        <img src="/src/assets/icons/logo.svg" alt="" width={65} />
+        <img src={logo} alt="" width={48} />
         <p className="text-center font-semibold text-xl">BookSwap</p>
       </div>
       <div>
