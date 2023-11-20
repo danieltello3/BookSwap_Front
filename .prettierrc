@@ -4,7 +4,7 @@
   "singleQuote": false,
   "trailingComma": "none",
   "jsxBracketSameLine": true,
-  "parser": "babel",
+  "parser": "typescript",
   "noSemi": false,
   "rcVerbose": true
 }
