@@ -80,7 +80,7 @@ const Register = () => {
                         />
                     </div>
                     <Link to={"/Login"}>
-                    <Button variant='primary' className="w-full p-2 rounded">
+                    <Button variant='primary' className="w-full p-2 rounded mt-2">
                         Registrarse
                     </Button>
                     </Link>

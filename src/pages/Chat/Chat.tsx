@@ -56,28 +56,28 @@ const Chat = () => {
           <div className="w-full px-5 flex flex-col justify-between">
             <div className="flex flex-col mt-5">
               <div className="flex justify-end mb-4">
-                <Message />
+                <Message type="message"/>
                 <UserImage />
               </div>
               <div className="flex justify-start mb-4">
                 <UserImage />
-                <Message />
+                <Message type="response"/>
               </div>
               <div className="flex justify-end mb-4">
-                <Message />
+                <Message type="message"/>
                 <UserImage />
               </div>
               <div className="flex justify-start mb-4">
                 <UserImage />
-                <Message />
+                <Message type="response"/>
               </div>
               <div className="flex justify-end mb-4">
-                <Message />
+                <Message type="message"/>
                 <UserImage />
               </div>
               <div className="flex justify-start mb-4">
                 <UserImage />
-                <Message />
+                <Message type="response"/>
               </div>
               {/* Otros elementos de mensajes */}
             </div>
