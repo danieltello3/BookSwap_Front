@@ -3,6 +3,15 @@ import UserProfile from "../../components/ui/moleculas/UserProfile/UserProfile"
 import InputText from "../../components/ui/atomos/InputText/InputText"
 import Button from "../../components/ui/atomos/Button/Button"
 
+const handleImageChange = (file: File | null) => {
+    // Lógica para manejar el cambio de imagen aquí
+    console.log("Imagen seleccionada:", file);
+  };
+
+  const handlePictureChange = () => {
+    // Lógica para manejar el cambio de imagen aquí
+    console.log("Cambio de imagen");
+  };
 const UserConfig = () => {
     return (
         <div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
@@ -15,7 +24,15 @@ const UserConfig = () => {
                         <h2 className="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
 
                         <div className="grid max-w-2xl mx-auto mt-8">
-                            <UserProfile />
+                            <UserProfile 
+                            imageName="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+                            rounded={true}
+                            imageType="image/*"
+                            changeButtonName="Cambiar foto"
+                            deleteButtonName="Eliminar foto"
+                            onImageChange={handleImageChange}
+                            onPictureChange={handlePictureChange}
+                            />
 
                             <div className="items-center mt-8 sm:mt-14 text-[#202142]">
                                 <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
