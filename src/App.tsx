@@ -11,6 +11,7 @@ import Chat from "./pages/Chat/Chat";
 import ShoppingHistory from "./pages/ShoppingHistory/ShoppingHistory";
 import Blog from "./pages/Blog/Blog";
 import BookPublicate from "./pages/BookPublicate/BookPublicate";
+import ListaDeDeseos from "./pages/ListaDeDeseos/ListaDeDeseos";
 
 
 function App() {
@@ -18,10 +19,9 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-
-        <Route path="/bookdetails" Component={BookDetails} />
-
         <Route path="/" Component={Home} />
+        <Route path="/bookdetails" Component={BookDetails} />
+        <Route path="/listadedeseos" Component={ListaDeDeseos} />
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
         <Route path="/userConfig" Component={UserConfig}/>

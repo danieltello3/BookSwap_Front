@@ -1,7 +1,7 @@
 import CategoriaSidebar from "../../components/ui/organismos/CategoriaSidebar/CategoriaSidebar";
 import { CategoriaOption } from "../../models/Categoria.model";
 import { Book } from "../../models/Book.model";
-import WishCard from "../../components/ui/moleculas/Category/WishCard";
+import WishCard from "../../components/ui/moleculas/Card/WishCard";
 
 const options: CategoriaOption[] = [
     { nombre: "Arte", id: 1 },
@@ -33,8 +33,7 @@ const book: Book = {
     return (
       <div className="flex w-full p-6 gap-4">
         <CategoriaSidebar title="Categorias" options={options} />
-        <div className="flex flex-row- gap-10 w-full">
-            {/*Componente de imagen del libro y Detalles Generales*/}            
+        <div className="flex flex-row- gap-10 w-full">        
             <div className="flex flex-col w-2/6">
                 <img 
                     src={book.imagen_url}
@@ -70,16 +69,6 @@ const book: Book = {
                 <b className="mt-2">SINOPSIS</b>
                 <p>Robert Langdon, profesor de simbología e iconografía religiosa de la universidad de Harvard, acude al Museo Guggenheim Bilbao para asistir a un trascendental anuncio que «cambiará la faz de la ciencia para siempre». El anfitrión de la velada es Edmond Kirsch, un joven multimillonario cuyos visionarios inventos tecnológicos y audaces predicciones lo han convertido en una figura de renombre mundial. Kirsch, uno de los alumnos más brillantes de Langdon años atrás, se dispone a revelar un extraordinario descubrimiento que dará respuesta a las dos preguntas que han obsesionado a la humanidad desde el principio de los tiempos.</p>
               </div>
-              
-              <WishCard img_url={book.imagen_url} 
-                        titulo={book.titulo} 
-                        autor={book.autor} 
-                        precio={book.precio} 
-                        editorial={book.editorial}
-                        fecha_publicacion={book.fecha_publicacion}
-                        num_paginas={book.numero_paginas}
-                        estado = {book.estado}
-                        />
 
             </div>
 
