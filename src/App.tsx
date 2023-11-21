@@ -12,6 +12,8 @@ import ShoppingHistory from "./pages/ShoppingHistory/ShoppingHistory";
 import Blog from "./pages/Blog/Blog";
 import BookPublicate from "./pages/BookPublicate/BookPublicate";
 
+import Publicate from "./pages/BookPublicate/BookPublicate";
+
 function App() {
   return (
     <Router>
@@ -28,6 +30,11 @@ function App() {
         <Route path="/shoppingHistory" Component={ShoppingHistory} />
         <Route path="/blog" Component={Blog} />
         <Route path="/bookPublicate" Component={BookPublicate} />
+
+
+
+
+        <Route path="/publicate" Component={Publicate} />
         {/* Aqui ponen las rutas de las paginas */}
       </Routes>
     </Router>
