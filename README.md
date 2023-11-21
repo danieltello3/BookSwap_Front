@@ -31,3 +31,5 @@ export default {
 
 
 ##PROBANDO RAMA ALEX
+##Libreria de iconos
+https://react-icons.github.io/react-icons/icons/fa/
