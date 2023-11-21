@@ -17,7 +17,7 @@ const Chat = () => {
           <div className="flex flex-col w-2/5 border-r-2 overflow-y-auto">
             {/* Search Component */}
             <div className="border-b-2 py-4 px-2">
-              <Search />
+              <Search placeholder="Buscar Chat"/>
             </div>
             {/* User List */}
             <UserItem

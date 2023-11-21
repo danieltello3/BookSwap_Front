@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import UserConfig from "./pages/UserConfig/UserConfig";
 import Chat from "./pages/Chat/Chat";
+import ShoppingHistory from "./pages/ShoppingHistory/ShoppingHistory";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" Component={Register} />
         <Route path="/userConfig" Component={UserConfig}/>
         <Route path="/chat" Component={Chat} />
+        <Route path="/shoppingHistory" Component={ShoppingHistory} />
         {/* Aqui ponen las rutas de las paginas */}
       </Routes>
     </Router>
