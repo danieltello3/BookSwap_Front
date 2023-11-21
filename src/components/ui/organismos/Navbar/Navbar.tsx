@@ -13,7 +13,7 @@ const Navbar = () => {
         <input
           type="search"
           className="w-80 p-2 rounded"
-          placeholder="Buscar por nombre, autor o genero"
+          placeholder="Buscar por nombre, autor o género"
         />
       </div>
       <div className="flex p-4 gap-4">
