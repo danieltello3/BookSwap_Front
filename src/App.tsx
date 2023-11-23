@@ -8,6 +8,7 @@ import Chat from "./pages/Chat/Chat";
 import ShoppingHistory from "./pages/ShoppingHistory/ShoppingHistory";
 import Blog from "./pages/Blog/Blog";
 import BookPublicate from "./pages/BookPublicate/BookPublicate";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/shoppingHistory" Component={ShoppingHistory} />
         <Route path="/blog" Component={Blog} />
         <Route path="/bookPublicate" Component={BookPublicate} />
+        <Route path="/checkout" Component={Checkout} />
         {/* Aqui ponen las rutas de las paginas */}
       </Routes>
     </Router>
