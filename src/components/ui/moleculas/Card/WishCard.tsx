@@ -37,7 +37,6 @@ interface WishCardProps {
             </Button>
           </div>
             
-
         </div>
     )
   }
