@@ -22,7 +22,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" Component={Home} />
-        <Route path="/bookdetails" Component={BookDetails} />
+        <Route path="/bookdetails/:id" Component={BookDetails} />
         <Route path="/listadedeseos" Component={ListaDeDeseos} />
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />

@@ -1,16 +1,6 @@
 import CategoriaSidebar from "../../components/ui/organismos/CategoriaSidebar/CategoriaSidebar";
-import { CategoriaOption } from "../../models/Categoria.model";
 import { Book } from "../../models/Book.model";
-import WishCard from "../../components/ui/moleculas/Card/WishCard";
-
-const options: CategoriaOption[] = [
-    { nombre: "Arte", id: 1 },
-    { id: 2, nombre: "Ciencia" },
-    { id: 3, nombre: "Deportes" },
-    { id: 4, nombre: "Tecnologia" },
-    { id: 5, nombre: "Biografía" },
-    { id: 6, nombre: "Historia" }
-  ];
+import { useParams } from "react-router-dom";
 
 const book: Book = {
   id: 1,
@@ -30,9 +20,14 @@ const book: Book = {
 }
 
   const BookDetails = () => {
+    const {id} = useParams();
+    console.log(id)
+
+    //realizar la consulta para traer el libro con el id
+
     return (
       <div className="flex w-full p-6 gap-4">
-        <CategoriaSidebar title="Categorias" options={options} />
+        <CategoriaSidebar />
         <div className="flex flex-row- gap-10 w-full">        
             <div className="flex flex-col w-2/6">
                 <img 
@@ -53,21 +48,21 @@ const book: Book = {
             <div className="flex flex-col w-4/6 gap-5 p-5">
               <h1 className="text-4xl font-extrabold leading-none 
                               tracking-tight text-gray-900 md:text-5xl 
-                              lg:text-6xl dark:text-white font-['Georgia']">ORIGEN</h1>
+                              lg:text-6xl dark:text-white font-['Georgia']">{book.titulo}</h1>
               <div className="flex mb-10">
-                <p className="text-2xl font-extralight text-gray-900 dark:text-white font-['Georgia']">DAN BROWN </p> 
+                <p className="text-2xl font-extralight text-gray-900 dark:text-white font-['Georgia']">{book.autor}</p> 
                 <p className="text-2xl font-extralight text-gray-900 dark:text-white font-['Georgia']">&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;</p>
-                <p className="text-2xl font-extralight text-blue-300 font-['Georgia']">EDITORIAL PLANETA</p> 
+                <p className="text-2xl font-extralight text-blue-300 font-['Georgia']">EDITORIAL {book.editorial}</p> 
               </div>
               <div className="text-3xl font-extrabold leading-none 
                                text-gray-900 dark:text-white font-['Georgia']">
-                S/. {book.precio}
+                S/ {book.precio}
               </div>
 
 
               <div className="flex flex-col">
                 <b className="mt-2">SINOPSIS</b>
-                <p>Robert Langdon, profesor de simbología e iconografía religiosa de la universidad de Harvard, acude al Museo Guggenheim Bilbao para asistir a un trascendental anuncio que «cambiará la faz de la ciencia para siempre». El anfitrión de la velada es Edmond Kirsch, un joven multimillonario cuyos visionarios inventos tecnológicos y audaces predicciones lo han convertido en una figura de renombre mundial. Kirsch, uno de los alumnos más brillantes de Langdon años atrás, se dispone a revelar un extraordinario descubrimiento que dará respuesta a las dos preguntas que han obsesionado a la humanidad desde el principio de los tiempos.</p>
+                <p>{book.sinopsis}</p>
               </div>
 
             </div>
