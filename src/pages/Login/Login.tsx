@@ -1,32 +1,18 @@
 import React, { useState } from 'react';
 import Button from '../../components/ui/atomos/Button/Button';
-import { Link,useNavigate } from 'react-router-dom';
-import apiLogin  from './apiLogin';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-    const [correo, setCorreo] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
 
-    const navigate = useNavigate();
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
         try {
-            if (!correo || !password) {
-                throw new Error('Por favor, ingresa tu correo y contraseña.');
-            }
-    
-            const result = await apiLogin({ correo, password });
-    
-            if (result.success) {
-                // Inicio de sesión exitoso, redirigir a "/"
-                navigate('/');
-            } else {
-                // Manejar errores, mostrar mensaje de error, etc.
-                setError(true);
-            }
+            // La lógica del Api
+            // ...
+
         } catch (error) {
             setError(true);
         }
@@ -53,8 +39,8 @@ const Login = () => {
                             id="email"
                             placeholder="correo@gmail.com"
                             className="w-full p-2 border rounded"
-                            value={correo}
-                            onChange={(e) => setCorreo(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <label className="block text-sm" htmlFor="email">Email address</label>
                     </div>
@@ -72,7 +58,7 @@ const Login = () => {
                     </div>
 
 
-                    <Button variant="primary" type="submit" className="w-full p-2 rounded"> Login</Button>
+                    <Button variant="primary" className="w-full p-2 rounded"> Login</Button>
 
                     <a className="text-xs text-gray-500" href="#!">Forgot password?</a>
                     <p className="text-sm text-teal-500">
@@ -84,6 +70,7 @@ const Login = () => {
 
 
             </div>
+            {error && <div className="error-message">Error: Usuario o contraseña incorrectos</div>}
         </section>
     );
 };
