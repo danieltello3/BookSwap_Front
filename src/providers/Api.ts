@@ -6,7 +6,10 @@ export const axiosInstance = axios.create({
 
 export const api = {
   COMBOS: {
-    categorias: (): Promise<AxiosResponse> => axiosInstance.get("categoria")
+    categorias: (): Promise<AxiosResponse> => axiosInstance.get("categoria"),
+    librosPorCategoria: (categoriaId: number): Promise<AxiosResponse> =>
+      axiosInstance.get(`libros/${categoriaId}`),
+
   },
   USUARIO: {
     //aqui van los endpoints relacionado al usuario
