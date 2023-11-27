@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import {Usuario}  from "../models/Usuario.model";
+
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:4444/"
+  baseURL: "http://localhost:3001/"
 });
 
 
@@ -20,8 +20,7 @@ export const api = {
     //aqui van los endpoints relacionado a las ordenes
 
   },
-  PAGO: {
+  PASARELA: {
     //aqui van los endpoints relacionado a los pagos
-
   }
 };
