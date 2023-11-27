@@ -1,11 +1,21 @@
 import { openForm } from "../../../../services/Niubiz"
+import { getSessionToken, ipClient } from "../../../../services/PasarelaService";
 import Button from "../../atomos/Button/Button"
 
+interface BotonPagoProps {
+  monto?: number;
+}
+const BotonPago: React.FC<BotonPagoProps> = ({monto=100}) => {
 
-const BotonPago = () => {
-
-  const handleForm = () => {
-    openForm("028b64852c302e0577dd226ab0c2879ca87987aeb7e15de11e0ed540584d6194")
+  const handleForm = async () => {
+    const ip = await ipClient()
+    const body = {
+      ip,
+      monto
+    }
+    const {sessionToken} = await getSessionToken(body);
+    
+    openForm(sessionToken)
   }
 
   return (

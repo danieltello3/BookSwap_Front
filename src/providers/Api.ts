@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 
+const url_ip = "https://api.ipify.org?format=json";
+
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/"
+  baseURL: "https://localhost:3001/"
 });
 
 export const api = {
@@ -14,7 +16,9 @@ export const api = {
   ORDEN: {
     //aqui van los endpoints relacionado a las ordenes
   },
-  PAGO: {
+  PASARELA: {
     //aqui van los endpoints relacionado a los pagos
+    getIp: (): Promise<AxiosResponse> => axios.get(url_ip),
+    sessionToken: (body:any): Promise<AxiosResponse> => axiosInstance.post("pago",body)
   }
 };
