@@ -24,13 +24,15 @@ const UserConfig = () => {
     const handleImageChange = (file: File | null) => {
         // Lógica para manejar el cambio de imagen aquí
         console.log("Imagen seleccionada:", file);
+
+        // Puedes actualizar la imagen del usuario en el estado si es necesario
+        // setUsuario((prevUsuario) => ({ ...prevUsuario, imagen: file }));
     };
 
     const handlePictureChange = () => {
         // Lógica para manejar el cambio de imagen aquí
         console.log("Cambio de imagen");
     };
-
     return (
         <div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
             <aside className="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
@@ -42,73 +44,128 @@ const UserConfig = () => {
                         <h2 className="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
 
                         <div className="grid max-w-2xl mx-auto mt-8">
-                            <UserProfile 
-                            imageName="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-                            rounded={true}
-                            imageType="image/*"
-                            changeButtonName="Cambiar foto"
-                            deleteButtonName="Eliminar foto"
-                            onImageChange={handleImageChange}
-                            onPictureChange={handlePictureChange}
+                            <UserProfile
+                                rounded={true}
+                                imageName={usuario ? usuario.fotoperfil : ''}
+                                changeButtonName="Cambiar foto"
+                                deleteButtonName="Eliminar foto"
+                                onImageChange={handleImageChange}
+                                onPictureChange={handlePictureChange}                                
                             />
+                            
 
                             <div className="items-center mt-8 sm:mt-14 text-[#202142]">
                                 <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                                     <div className="w-full">
-                                    <InputText
-                                        label="Nombre Completo"
-                                        id="nombre"
-                                        type="text"
-                                        placeholder="Ingresa tu nombre"
-                                        required
-                                        
-                                    />   
+                                        <InputText
+                                            label="Nombre Completo"
+                                            id="nombre"
+                                            type="text"
+                                            placeholder="Ingresa tu nombre"
+                                            required
+                                            value={usuario ? usuario.nombre : ''}
+
+                                        />
                                     </div>
 
                                     <div className="w-full">
-                                    <InputText
-                                        label="Apellidos"
-                                        id="apellidos"
-                                        type="text"
-                                        placeholder="Ingresa tus apellidos"
-                                        required
-                                        
-                                    />   
+                                        <InputText
+                                            label="Apellidos"
+                                            id="apellidos"
+                                            type="text"
+                                            placeholder="Ingresa tus apellidos"
+                                            required
+                                            value={usuario ? usuario.apellido : ''}
+
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="mb-2 sm:mb-6">
-                                <InputText
+                                    <InputText
                                         label="Correo electrónico"
                                         id="email"
                                         type="email"
                                         placeholder="Ingresa correo electrónico"
                                         required
-                                        
-                                    />   
+                                        value={usuario ? usuario.correo : ''}
+
+                                    />
                                 </div>
 
                                 <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                                     <div className="w-full">
-                                    <InputText
-                                        label="Teléfono"
-                                        id="phone"
-                                        type="number"
-                                        placeholder="Ingresa tu número de teléfono"
-                                        
-                                        required
-                                    />   
+                                        <InputText
+                                            label="Teléfono"
+                                            id="phone"
+                                            type="number"
+                                            placeholder="Ingresa tu número de teléfono"
+                                            required
+                                            value={usuario ? usuario.telefono : ''}
+                                        />
                                     </div>
 
                                     <div className="w-full">
+                                        <InputText
+                                            label="DNI"
+                                            id="dni"
+                                            type="number"
+                                            placeholder="Ingresa tu DNI"
+                                            required
+                                            value={usuario ? usuario.dni : ''}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mb-2 sm:mb-2">
                                     <InputText
                                         label="Contraseña"
                                         id="password"
                                         type="password"
-                                        placeholder="Ingresa tú contraseña"
+                                        placeholder="Ingresa tu password"
                                         required
-                                    />   
+                                    />
+                                </div>
+                                <div className="mb-2 sm:mb-2">
+                                    <InputText
+                                        label="Dirección"
+                                        id="direccion"
+                                        type="text"
+                                        placeholder="Ingresa tu dirección"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
+                                    <div className="w-full">
+                                        <InputText
+                                            label="Número de casa"
+                                            id="numero"
+                                            type="number"
+                                            placeholder="número de casa"
+                                            required
+                                            
+                                        />
                                     </div>
+
+                                    <div className="w-full">
+                                        <InputText
+                                            label="Distrito"
+                                            id="distrito"
+                                            type="text"
+                                            placeholder="Ingresa tu distrito"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="w-full">
+                                        <InputText
+                                            label="Ciudad"
+                                            id="ciudad"
+                                            type="text"
+                                            placeholder="Ingresa tu ciudad"
+                                            required
+                                        />
+                                    </div>
+                                    
                                 </div>
 
                                 <div className="mb-6">

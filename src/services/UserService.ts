@@ -63,3 +63,29 @@ export const loginUsuario = async (usuario: Usuario) => {
     }
   };
   
+  export const actualizarUsuario = async (usuario: Usuario) => {
+    try {
+      // Obtiene el token del almacenamiento local
+      const token = await getTokenFromLocalStorage();
+  
+      // Si no hay token, podrías manejarlo de alguna manera, o simplemente devolver null
+      if (!token) {
+        console.error("No se encontró el token de autorización.");
+        return null;
+      }
+  
+      // Configura el token en las cabeceras de la solicitud
+      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  
+      // Realiza la solicitud para actualizar el usuario
+      const { data } = await axiosInstance.put("usuario", usuario);
+  
+      // Devuelve el resultado de actualizar el usuario
+      return data;
+    } catch (error) {
+      // Maneja el error de manera apropiada, lanza una excepción, muestra un mensaje, etc.
+      console.error('Error al actualizar el usuario:', error);
+      throw error;
+    }
+  }
+  

@@ -8,4 +8,5 @@ export interface Usuario {
     imagen_url?: string;
     tipo_usuario?: string;
     ubicacion?: string;
+    fotoperifl?: string;
 }
