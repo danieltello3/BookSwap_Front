@@ -65,6 +65,9 @@ const ListaDeDeseos = () => {
     <div className="flex w-full p-6 gap-4">
       <CategoriaSidebar />
       <div className="flex flex-col gap-y5">
+      <h1 className="text-2xl font-extrabold leading-none 
+                              tracking-tight text-gray-900 md:text-5xl 
+                              lg:text-6xl dark:text-white font-['Georgia'] p-5">LISTA DE DESEOS</h1>
         {books?.map((book) => (
           <WishCard
             key={book.id}

@@ -4,6 +4,7 @@ import { Book } from "../../models/Book.model";
 import { CategoriaOption } from "../../models/Categoria.model";
 
 const destacados: Book[] = [
+  
   {
     id: 1,
     titulo: "El principito",

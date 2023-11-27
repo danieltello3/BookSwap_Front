@@ -13,7 +13,7 @@ interface WishCardProps {
   
   const WishCard: React.FC<WishCardProps> = (props) => {
     return (
-        <div className="flex flex-row gap-20 p-4 justify-center items-center border border-black">
+        <div className="flex flex-row gap-20 p-4 justify-center items-center">
           <div className="w-1/5">
             <img src={props.img_url} alt="libro" className="rounded-3xl"></img>
           </div>

@@ -3,7 +3,7 @@ import { Usuario } from "./Usuario.model";
 export interface Book {
     id: number;
     titulo: string;
-    categoria:string[];
+    categoria?:string[];
     estado: string;
     ISBN?: string;
     idioma?: string;
