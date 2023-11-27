@@ -4,6 +4,7 @@ import InputText from "../../components/ui/atomos/InputText/InputText"
 import Button from "../../components/ui/atomos/Button/Button"
 import { useEffect, useState } from 'react';
 import { obtenerUsuario } from '../../services/UserService';
+import { actualizarUsuario } from "../../services/UserService";
 
 const UserConfig = () => {
     const [usuario, setUsuario] = useState<any>(null);
@@ -33,6 +34,30 @@ const UserConfig = () => {
         // Lógica para manejar el cambio de imagen aquí
         console.log("Cambio de imagen");
     };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUsuario({
+          ...usuario,
+          [e.target.id]: e.target.value
+        });
+      };
+
+      const handleUpdate = async () => {
+        try {
+          const updatedUser = await actualizarUsuario(usuario);
+          
+          // Verifica la estructura de los datos y ajusta según sea necesario
+          if (updatedUser && updatedUser.data) {
+            setUsuario(updatedUser.data);
+            console.log('Usuario actualizado correctamente:', updatedUser.data);
+          } else {
+            console.error('Error al actualizar el usuario: Datos de usuario no válidos');
+          }
+        } catch (error) {
+          console.error('Error al actualizar el usuario:', error);
+        }
+      };
+
     return (
         <div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
             <aside className="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
@@ -64,6 +89,7 @@ const UserConfig = () => {
                                             placeholder="Ingresa tu nombre"
                                             required
                                             value={usuario ? usuario.nombre : ''}
+                                            onChange={handleInputChange}
 
                                         />
                                     </div>
@@ -71,11 +97,12 @@ const UserConfig = () => {
                                     <div className="w-full">
                                         <InputText
                                             label="Apellidos"
-                                            id="apellidos"
+                                            id="apellido"
                                             type="text"
                                             placeholder="Ingresa tus apellidos"
                                             required
                                             value={usuario ? usuario.apellido : ''}
+                                            onChange={handleInputChange}
 
                                         />
                                     </div>
@@ -84,11 +111,12 @@ const UserConfig = () => {
                                 <div className="mb-2 sm:mb-6">
                                     <InputText
                                         label="Correo electrónico"
-                                        id="email"
+                                        id="correo"
                                         type="email"
                                         placeholder="Ingresa correo electrónico"
                                         required
                                         value={usuario ? usuario.correo : ''}
+                                        onChange={handleInputChange}
 
                                     />
                                 </div>
@@ -97,11 +125,12 @@ const UserConfig = () => {
                                     <div className="w-full">
                                         <InputText
                                             label="Teléfono"
-                                            id="phone"
+                                            id="telefono"
                                             type="number"
                                             placeholder="Ingresa tu número de teléfono"
                                             required
                                             value={usuario ? usuario.telefono : ''}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
 
@@ -113,6 +142,7 @@ const UserConfig = () => {
                                             placeholder="Ingresa tu DNI"
                                             required
                                             value={usuario ? usuario.dni : ''}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
@@ -184,7 +214,7 @@ const UserConfig = () => {
                                 </div>
 
                                 <div className="flex justify-end">
-                                    <Button variant="primary">
+                                    <Button variant="primary" onClick={handleUpdate}>
                                         Guardar Cambios
                                     </Button>
                                 </div>
