@@ -2,17 +2,35 @@ import VNavbar from "../../components/ui/organismos/VNavbar/VNavbar"
 import UserProfile from "../../components/ui/moleculas/UserProfile/UserProfile"
 import InputText from "../../components/ui/atomos/InputText/InputText"
 import Button from "../../components/ui/atomos/Button/Button"
+import { useEffect, useState } from 'react';
+import { obtenerUsuario } from '../../services/UserService';
 
-const handleImageChange = (file: File | null) => {
-    // Lógica para manejar el cambio de imagen aquí
-    console.log("Imagen seleccionada:", file);
-  };
-
-  const handlePictureChange = () => {
-    // Lógica para manejar el cambio de imagen aquí
-    console.log("Cambio de imagen");
-  };
 const UserConfig = () => {
+    const [usuario, setUsuario] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await obtenerUsuario();
+                setUsuario(response.content); // Ajusta la estructura según la respuesta real del servidor
+            } catch (error) {
+                console.error('Error al obtener datos del usuario:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    const handleImageChange = (file: File | null) => {
+        // Lógica para manejar el cambio de imagen aquí
+        console.log("Imagen seleccionada:", file);
+    };
+
+    const handlePictureChange = () => {
+        // Lógica para manejar el cambio de imagen aquí
+        console.log("Cambio de imagen");
+    };
+
     return (
         <div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
             <aside className="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
@@ -43,6 +61,7 @@ const UserConfig = () => {
                                         type="text"
                                         placeholder="Ingresa tu nombre"
                                         required
+                                        
                                     />   
                                     </div>
 
@@ -53,6 +72,7 @@ const UserConfig = () => {
                                         type="text"
                                         placeholder="Ingresa tus apellidos"
                                         required
+                                        
                                     />   
                                     </div>
                                 </div>
@@ -64,6 +84,7 @@ const UserConfig = () => {
                                         type="email"
                                         placeholder="Ingresa correo electrónico"
                                         required
+                                        
                                     />   
                                 </div>
 
@@ -74,6 +95,7 @@ const UserConfig = () => {
                                         id="phone"
                                         type="number"
                                         placeholder="Ingresa tu número de teléfono"
+                                        
                                         required
                                     />   
                                     </div>
