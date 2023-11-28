@@ -1,8 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 import { Usuario } from "../models/Usuario.model";
 import { Mensaje } from "../models/Mensaje.model";
+export const baseURL = "http://localhost:3001/";
+
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/"
+  baseURL
 });
 const url_ip = "https://api.ipify.org?format=json";
 

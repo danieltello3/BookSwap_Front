@@ -31,17 +31,19 @@ const Checkout = () => {
 
   };
 
+  const montoCompra = 110;
+  const nroOrden = 15;
   // Dummy function for form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add logic for form submission
     const body = {
       ip,
-      monto: 100
+      monto: montoCompra
     }
     const {sessionToken} = await getSessionToken(body);
     
-    openForm(sessionToken,100)
+    openForm(sessionToken,montoCompra,nroOrden)
     console.log("Form submitted!")
   };
 
