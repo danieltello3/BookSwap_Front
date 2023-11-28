@@ -1,20 +1,27 @@
-import { useEffect, useState } from "react";
-import Button from "../../components/ui/atomos/Button/Button";
-import PurchaseSummary from "../../components/ui/organismos/PurchaseSummary/PurchaseSummary";
+import { useEffect, useRef, useState } from "react";
 import { purchaseListTestData } from "./TestData";
-import BotonPago from "../../components/ui/organismos/BotonPago/BotonPago";
+import { useJsApiLoader, Autocomplete, LoadScript } from "@react-google-maps/api";
 import { getSessionToken, ipClient } from "../../services/PasarelaService";
 import { openForm } from "../../services/Niubiz";
 
 const Checkout = () => {
   const [ip, setIp] = useState('')
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyAZSCrn2s6_EXA-TJ3r8UVgT4xPNGCA5QI",
+    libraries: ["places", "geometry"]
+  });
+
+  const testLocation = { lat: -12.084142196725567, lng: -76.9704611988532 };
+
   // State for form input values
   const [formData, setFormData] = useState({
     date: "",
     timeRange: "",
     address: "",
     reference: "",
-    paymentMethod: ""
+    paymentMethod: "",
+    deliveryType: "",
+    distancePayment: 0
 
     // Add more fields as needed
   });
@@ -27,9 +34,45 @@ const Checkout = () => {
   },[])
 
   // Function to handle form input changes
-  const handleInputChange = () => {
-
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
   };
+
+  const autocomplete = useRef(null);
+
+  const onPlaceChanged = () => {
+    const place = autocomplete.current.getPlace();
+    console.log(place);
+
+  
+    const gMaps = window.google;
+
+    if (!place.geometry) {
+      console.error("Ubicación no cuenta con coordenadas");
+      return;
+    }
+  
+    const formattedAddress = place.formatted_address || "";
+    const { lat, lng } = place.geometry.location.toJSON();
+  
+    // Calcular distancia entre las dos direcciones
+    formData.distancePayment = gMaps.maps.geometry.spherical.computeDistanceBetween(
+      new gMaps.maps.LatLng(testLocation.lat, testLocation.lng),
+      new gMaps.maps.LatLng(lat, lng)
+    ) / 1000;
+    
+    console.log(formData.distancePayment);
+  
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      address: formattedAddress,
+    }));
+  };
+    
 
   const montoCompra = 120;
   const nroOrden = 16;
@@ -37,6 +80,11 @@ const Checkout = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add logic for form submission
+  };
+
+  const totalSum = purchaseListTestData.reduce((sum, purchase) => sum + purchase.price, 0)
+  + formData.distancePayment
+  + (formData.deliveryType === 'express' ? 3 : 0);
     const body = {
       ip,
       monto: montoCompra
@@ -92,12 +140,18 @@ const Checkout = () => {
 
             {/* Sección 2: Dirección y Ubicar en el Mapa */}
             <div className="flex mb-5">
-              <h2 className="text-gray-600 font-semibold">Dirección de Entrega</h2>
+              <h2 className="text-gray-600 font-semibold">
+                Dirección de Entrega
+              </h2>
             </div>
 
             <div className="flex mb-5">
               <div className="flex-1 mr-4">
                 <label htmlFor="address">Dirección:</label>
+                {isLoaded ?(
+                <Autocomplete
+                onLoad={(auto) => (autocomplete.current = auto)}
+                onPlaceChanged={() => onPlaceChanged()}>
                 <input
                   type="text"
                   id="address"
@@ -107,6 +161,10 @@ const Checkout = () => {
                   className="w-full p-2 border"
                   // required
                 />
+              </Autocomplete>
+              ) : (
+                <div>Cargando...</div>
+              )}
               </div>
               <div className="flex-1">
                 <label htmlFor="reference">Referencia: (Opcional)</label>
@@ -122,99 +180,98 @@ const Checkout = () => {
             </div>
 
             <div className="flex mb-4">
-            {/* Sección 3: Opciones de Pago */}
-            <div className="flex-1 mr-4">
-              <p>Opciones de Pago:</p>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="cash"
-                  name="paymentMethod"
-                  value="cash"
-                  checked={formData.paymentMethod === "cash"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="cash" className="ml-2 flex items-center">
-                  <span className="mr-2">Efectivo</span>
-                  <img
-                    src="src\assets\icons\money-cash-svgrepo-com.svg"
-                    alt={`Placeholder Image for ${name}`}
-                    className="object-cover w-10 h-10 min-w-fit"
+              {/* Sección 3: Opciones de Pago */}
+              <div className="flex-1 mr-4">
+                <p>Opciones de Pago:</p>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="cash"
+                    name="paymentMethod"
+                    value="cash"
+                    checked={formData.paymentMethod === "cash"}
+                    onChange={handleInputChange}
                   />
-                </label>
+                  <label htmlFor="cash" className="ml-2 flex items-center">
+                    <span className="mr-2">Efectivo</span>
+                    <img
+                      src="src\assets\icons\money-cash-svgrepo-com.svg"
+                      alt={`Placeholder Image for ${name}`}
+                      className="object-cover w-10 h-10 min-w-fit"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="card"
+                    name="paymentMethod"
+                    value="card"
+                    checked={formData.paymentMethod === "card"}
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="card" className="ml-2 flex items-center">
+                    <span className="mr-2">Tarjeta Crédito/Débito</span>
+                    <img
+                      src="src\assets\icons\visa-svgrepo-com.svg"
+                      alt={`Placeholder Image for ${name}`}
+                      className="object-cover w-10 h-10 min-w-fit"
+                    />
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="paypal"
+                    name="paymentMethod"
+                    value="paypal"
+                    checked={formData.paymentMethod === "paypal"}
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="card" className="ml-2 flex items-center">
+                    <span className="mr-2">Paypal</span>
+                    <img
+                      src="src\assets\icons\paypal-svgrepo-com.svg"
+                      alt={`Placeholder Image for ${name}`}
+                      className="object-cover w-10 h-10 min-w-fit"
+                    />
+                  </label>
+                </div>
               </div>
 
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="card"
-                  name="paymentMethod"
-                  value="card"
-                  checked={formData.paymentMethod === "card"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="card" className="ml-2 flex items-center">
-                  <span className="mr-2">Tarjeta Crédito/Débito</span>
-                  <img
-                    src="src\assets\icons\visa-svgrepo-com.svg"
-                    alt={`Placeholder Image for ${name}`}
-                    className="object-cover w-10 h-10 min-w-fit"
+              {/* Sección 4: Opciones de Envío */}
+              <div className="flex-1">
+                <p>Opciones de Pago:</p>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="normal"
+                    name="deliveryType"
+                    value="normal"
+                    checked={formData.deliveryType === "normal"}
+                    onChange={handleInputChange}
                   />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="paypal"
-                  name="paymentMethod"
-                  value="paypal"
-                  checked={formData.paymentMethod === "paypal"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="card" className="ml-2 flex items-center">
-                  <span className="mr-2">Paypal</span>
-                  <img
-                    src="src\assets\icons\paypal-svgrepo-com.svg"
-                    alt={`Placeholder Image for ${name}`}
-                    className="object-cover w-10 h-10 min-w-fit"
+                  <label htmlFor="normal" className="ml-2 flex items-center">
+                    <span className="mr-2">Normal</span>
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="express"
+                    name="deliveryType"
+                    value="express"
+                    checked={formData.deliveryType === "express"}
+                    onChange={handleInputChange}
                   />
-                </label>
+                  <label htmlFor="express" className="ml-2 flex items-center">
+                    <span className="mr-2">Express (+ S/. 3)</span>
+                  </label>
+                </div>
               </div>
             </div>
-
-            {/* Sección 4: Opciones de Envío */}
-            <div className="flex-1">
-              <p>Opciones de Pago:</p>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="cash"
-                  name="paymentMethod"
-                  value="cash"
-                  checked={formData.paymentMethod === "normal"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="cash" className="ml-2 flex items-center">
-                  <span className="mr-2">Normal</span>
-                </label>
-              </div>
-
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="card"
-                  name="paymentMethod"
-                  value="card"
-                  checked={formData.paymentMethod === "express"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="card" className="ml-2 flex items-center">
-                  <span className="mr-2">Express (+ S/. 3)</span>
-                </label>
-              </div>
-            </div>
-            </div>
-
 
             {/* Add more form fields as needed */}
           </div>
@@ -223,7 +280,10 @@ const Checkout = () => {
       {/* Lado derecho, donde esta el Resumen de compra y el Boton */}
       <div className="col-span-4 p-6">
         <div className="mb-4">
-          <PurchaseSummary purchases={purchaseListTestData} />
+          <PurchaseSummary
+            purchases={purchaseListTestData}
+            totalSum={totalSum}
+          />
         </div>
         <BotonPago type="submit" className="w-full" ip={ip}/>
       </div>
