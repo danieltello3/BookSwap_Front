@@ -21,9 +21,13 @@ const book: Book = {
 
   const BookDetails = () => {
     const {id} = useParams();
+    //useState 
+
     console.log(id)
 
     //realizar la consulta para traer el libro con el id
+    
+
 
     return (
       <div className="flex w-full p-6 gap-4">
