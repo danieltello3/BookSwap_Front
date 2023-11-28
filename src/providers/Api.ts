@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from "axios";
 import { Usuario } from "../models/Usuario.model";
 import { Mensaje } from "../models/Mensaje.model";
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:4444/"
+  baseURL: "http://localhost:3001/"
 });
-
+const url_ip = "https://api.ipify.org?format=json";
 
 export const api = {
   COMBOS: {
@@ -23,6 +23,8 @@ export const api = {
   },
   PASARELA: {
     //aqui van los endpoints relacionado a los pagos
+    getIp: (): Promise<AxiosResponse> => axios.get(url_ip),
+    sessionToken: (body:any): Promise<AxiosResponse> => axiosInstance.post("pago",body)
   },
   MENSAJE:{
     mostrar: (): Promise<AxiosResponse> => axiosInstance.get(`messages`),

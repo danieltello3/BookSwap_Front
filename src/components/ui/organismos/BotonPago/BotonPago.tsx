@@ -4,22 +4,21 @@ import Button from "../../atomos/Button/Button"
 
 interface BotonPagoProps {
   monto?: number;
+  ip: string;
+  ordenNumber?: string;
+  type?: "submit" | "button";
+  variant?: "primary" | "secondary";
+  className?: string;
 }
-const BotonPago: React.FC<BotonPagoProps> = ({monto=100}) => {
+const BotonPago: React.FC<BotonPagoProps> = ({monto=100,type='button',variant='primary',className=''}) => {
 
   const handleForm = async () => {
     const ip = await ipClient()
-    const body = {
-      ip,
-      monto
-    }
-    const {sessionToken} = await getSessionToken(body);
     
-    openForm(sessionToken)
   }
 
   return (
-    <Button variant="primary" onClick={handleForm}>Registrar pedido</Button>
+    <Button type={type} variant={variant} className={className}>Confirmar Orden</Button>
   )
 }
 
