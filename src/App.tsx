@@ -16,6 +16,7 @@ import ListaDeDeseos from "./pages/ListaDeDeseos/ListaDeDeseos";
 import Publicate from "./pages/BookPublicate/Publicate";
 import Checkout from "./pages/Checkout/Checkout";
 import Tracking from "./pages/Tracking/Tracking";
+import RespuestaPago from "./pages/RespuestaPago/RespuestaPago";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/publicate" Component={Publicate} />
         <Route path="/checkout" Component={Checkout} />
         <Route path="/tracking" Component={Tracking} />
+        <Route path="/confirmation" Component={RespuestaPago} />
         {/* Aqui ponen las rutas de las paginas */}
       </Routes>
     </Router>

@@ -31,8 +31,8 @@ const Checkout = () => {
 
   };
 
-  const montoCompra = 110;
-  const nroOrden = 15;
+  const montoCompra = 120;
+  const nroOrden = 16;
   // Dummy function for form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
