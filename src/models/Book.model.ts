@@ -1,10 +1,10 @@
 import { Usuario } from "./Usuario.model";
 
 export interface Book {
-    id: number;
-    titulo: string;
-    categoria?:string[];
-    estado: string;
+    id: number; //usa
+    titulo: string; //usa
+    categoria?:string; //usa
+    estado: string; //usa
     ISBN?: string;
     idioma?: string;
     numero_paginas?: number;
