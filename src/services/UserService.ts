@@ -26,7 +26,7 @@ export const loginUsuario = async (usuario: Usuario) => {
       console.log('Respuesta del login:', data);
   
       // Guarda el token en el localStorage
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("user", JSON.stringify(data.content));
   
       // Devuelve el resultado del login
       return data;
@@ -39,18 +39,6 @@ export const loginUsuario = async (usuario: Usuario) => {
   
   export const obtenerUsuario = async () => {
     try {
-      // Obtiene el token del almacenamiento local
-      const token = await getTokenFromLocalStorage();
-  
-      // Si no hay token, podrías manejarlo de alguna manera, o simplemente devolver null
-      if (!token) {
-        console.error("No se encontró el token de autorización.");
-        return null;
-      }
-  
-      // Configura el token en las cabeceras de la solicitud
-      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  
       // Realiza la solicitud para obtener el usuario
       const { data } = await axiosInstance.get("usuario/perfil");
   

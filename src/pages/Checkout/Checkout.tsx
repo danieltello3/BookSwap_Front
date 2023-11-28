@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/ui/atomos/Button/Button";
 import PurchaseSummary from "../../components/ui/organismos/PurchaseSummary/PurchaseSummary";
 import { purchaseListTestData } from "./TestData";
+import BotonPago from "../../components/ui/organismos/BotonPago/BotonPago";
+import { getSessionToken, ipClient } from "../../services/PasarelaService";
+import { openForm } from "../../services/Niubiz";
 
 const Checkout = () => {
+  const [ip, setIp] = useState('')
   // State for form input values
   const [formData, setFormData] = useState({
     date: "",
@@ -14,6 +18,13 @@ const Checkout = () => {
 
     // Add more fields as needed
   });
+  const getIp = async () => {
+    const ipResponse = await ipClient();
+    setIp(ipResponse);
+  }
+  useEffect(() => {
+    getIp();
+  },[])
 
   // Function to handle form input changes
   const handleInputChange = () => {
@@ -21,24 +32,28 @@ const Checkout = () => {
   };
 
   // Dummy function for form submission
-  const handleSubmit = () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     // Add logic for form submission
-  };
-
-  // Dummy function for form submission
-  const handleLocationButtonClick = () => {
-    // Add logic for form submission
+    const body = {
+      ip,
+      monto: 100
+    }
+    const {sessionToken} = await getSessionToken(body);
+    
+    openForm(sessionToken,100)
+    console.log("Form submitted!")
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-12 gap-4 bg-[#C0EAE6]">
+    <form className="min-h-screen grid grid-cols-12 gap-4 bg-[#C0EAE6]" onSubmit={handleSubmit} >
       {/* Lado derecho (Formulario) */}
       <div className="col-span-8 p-6">
         <div className="bg-gray-100 rounded-lg">
           <h5 className="px-10 py-5 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
             Detalle de la Entrega
           </h5>
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg p-10">
+          <div className="bg-white rounded-lg p-10">
             {/* Sección 1: Fecha y Rango de Hora */}
             <div className="flex mb-5">
               <h2 className="text-gray-600 font-semibold">Fecha y Hora</h2>
@@ -54,7 +69,7 @@ const Checkout = () => {
                   value={formData.date}
                   onChange={handleInputChange}
                   className="w-full p-2 border"
-                  required
+                  // required
                 />
               </div>
 
@@ -68,7 +83,7 @@ const Checkout = () => {
                   onChange={handleInputChange}
                   className="w-full p-2 border"
                   placeholder="Ej. 09:00 AM - 12:00 PM"
-                  required
+                  // required
                 />
               </div>
             </div>
@@ -88,7 +103,7 @@ const Checkout = () => {
                   value={formData.address}
                   onChange={handleInputChange}
                   className="w-full p-2 border"
-                  required
+                  // required
                 />
               </div>
               <div className="flex-1">
@@ -165,7 +180,7 @@ const Checkout = () => {
             </div>
 
             {/* Add more form fields as needed */}
-          </form>
+          </div>
         </div>
       </div>
       {/* Lado derecho, donde esta el Resumen de compra y el Boton */}
@@ -173,11 +188,9 @@ const Checkout = () => {
         <div className="mb-4">
           <PurchaseSummary purchases={purchaseListTestData} />
         </div>
-        <Button type="submit" variant="primary" className="w-full">
-          Confirmar Orden
-        </Button>
+        <BotonPago type="submit" className="w-full" ip={ip}/>
       </div>
-    </div>
+    </form>
   );
 };
 

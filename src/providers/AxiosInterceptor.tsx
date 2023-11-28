@@ -12,7 +12,6 @@ const AxiosInterceptor = ({ children }: any) => {
     };
     const useToken = async (config: any) => {
       const token = getTokenFromLocalStorage();
-      console.log("Token:", token);
       config.headers.Authorization = token ? `Bearer ${token}` : "";
       return config;
     };
