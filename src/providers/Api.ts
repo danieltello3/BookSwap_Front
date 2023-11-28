@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { Usuario } from "../models/Usuario.model";
 import { Mensaje } from "../models/Mensaje.model";
+import { Post } from "../models/Posts.model";
 export const baseURL = "http://localhost:3001/";
 
 export const axiosInstance = axios.create({
   baseURL
+
 });
 const url_ip = "https://api.ipify.org?format=json";
 
@@ -31,5 +33,25 @@ export const api = {
   MENSAJE:{
     mostrar: (): Promise<AxiosResponse> => axiosInstance.get(`messages`),
     enviarMensaje: (data: Mensaje): Promise<AxiosResponse> => axiosInstance.post(`messages`, data)
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  POSTS:{
+    mostrar: (): Promise<AxiosResponse> => axiosInstance.get(`posts`),
+    crear: (data: Mensaje): Promise<AxiosResponse> => axiosInstance.post(`posts`, data),
+    like: (data:Post): Promise<AxiosResponse> => axiosInstance.post(`/posts/:postId/like`, data)
   }
 };
