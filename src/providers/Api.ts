@@ -14,6 +14,12 @@ export const api = {
   COMBOS: {
     categorias: (): Promise<AxiosResponse> => axiosInstance.get("categoria")
   },
+  LIBRO:{
+    //Retorna los libros que encontré por cada categoría
+    obtenerLibros: (): Promise<AxiosResponse> => axiosInstance.get("libros"),
+    librosPorCategoria: (categoriaId: number): Promise<AxiosResponse> => axiosInstance.get(`libros/${categoriaId}`), 
+    obtenerLibro: (libroId: number): Promise<AxiosResponse> => axiosInstance.get(`libro/${libroId}`)
+  },
   USUARIO: {
     //aqui van los endpoints relacionado al usuario
     crear: (data: Usuario): Promise<AxiosResponse> => axiosInstance.post("usuario", data),
