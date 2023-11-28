@@ -7,8 +7,9 @@ interface UserInputProps {
   columnSize?: string;
   numberOfLines?: number;
   sendButtonText?: string;
-  onSendMessage: () => void;
+  onSendMessage: () => Promise<void>;
   onFileChange: (file: File) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; // Cambia a HTMLTextAreaElement
   children?: ReactNode;
 }
 
@@ -19,6 +20,7 @@ const UserInput: React.FC<UserInputProps> = ({
   sendButtonText = 'Enviar',
   onSendMessage,
   onFileChange,
+  onChange, // Asegúrate de que estás utilizando onChange
   children,
 }) => {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +41,7 @@ const UserInput: React.FC<UserInputProps> = ({
         className={`w-full bg-gray-300 py-5 px-3 rounded-xl pr-12 resize-none`}
         placeholder={placeholder}
         rows={numberOfLines}
+        onChange={onChange} // Usa onChange aquí
       />
       <div className="absolute top-0 right-0 h-full flex items-center pr-4">
         <label htmlFor="fileInput" className="ml-2 cursor-pointer">
