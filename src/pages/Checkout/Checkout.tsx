@@ -15,7 +15,7 @@ const Checkout = () => {
   const [totalSum, setTotalSum] = useState(50);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAZSCrn2s6_EXA-TJ3r8UVgT4xPNGCA5QI",
-    libraries: ["places", "geometry"]
+    libraries: ["places", "geometry"],region: "PE"
   });
 
   const testLocation = { lat: -12.084142196725567, lng: -76.9704611988532 };
