@@ -5,6 +5,7 @@ import Button from "../../components/ui/atomos/Button/Button"
 import { useEffect, useState } from 'react';
 import { obtenerUsuario } from '../../services/UserService';
 import { actualizarUsuario } from "../../services/UserService";
+import { toBase64 } from "../../utils/archivo.utility";
 
 const UserConfig = () => {
     const [usuario, setUsuario] = useState<any>(null);
@@ -22,13 +23,20 @@ const UserConfig = () => {
         fetchUserData();
     }, []);
 
-    const handleImageChange = (file: File | null) => {
-        // Lógica para manejar el cambio de imagen aquí
-        console.log("Imagen seleccionada:", file);
-
-        // Puedes actualizar la imagen del usuario en el estado si es necesario
-        // setUsuario((prevUsuario) => ({ ...prevUsuario, imagen: file }));
-    };
+    const handleImageChange = async (file: File | null) => {
+        if (file) {
+          try {
+            const base64Image = await toBase64(file);
+            console.log('Imagen en base64:', base64Image);
+    
+            // Actualiza la imagen del usuario en el estado
+            setUsuario((prevUsuario) => ({ ...prevUsuario, imagen_url: base64Image }));
+          } catch (error) {
+            console.error('Error al convertir la imagen a base64:', error);
+          }
+        }
+      };
+    
 
     const handlePictureChange = () => {
         // Lógica para manejar el cambio de imagen aquí

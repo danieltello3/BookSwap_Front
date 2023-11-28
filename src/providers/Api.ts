@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Usuario } from "../models/Usuario.model";
 import { Mensaje } from "../models/Mensaje.model";
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/"
+  baseURL: "http://localhost:4444/"
 });
 const url_ip = "https://api.ipify.org?format=json";
 
