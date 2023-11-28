@@ -1,5 +1,4 @@
 import BookCard from "../../components/ui/moleculas/BookCard/BookCard";
-import BotonPago from "../../components/ui/organismos/BotonPago/BotonPago";
 import CategoriaSidebar from "../../components/ui/organismos/CategoriaSidebar/CategoriaSidebar";
 import { Book } from "../../models/Book.model";
 import { CategoriaOption } from "../../models/Categoria.model";
@@ -62,7 +61,6 @@ const Home = () => {
               <BookCard book={libro} key={libro.id}/>
             ))}
           </div>
-          <BotonPago/>
         </div>
       </div>
     </div>
