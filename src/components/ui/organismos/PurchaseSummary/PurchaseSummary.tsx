@@ -8,12 +8,12 @@ interface PurchaseListProps {
     price: number;
     seller: string;
     imageUrl?: string;
-  }[];
-}
+  }[],
+    totalSum: number;
+  }
 
-const PurchaseList: React.FC<PurchaseListProps> = ({ purchases }) => {
-  const totalSum = purchases.reduce((sum, purchase) => sum + purchase.price, 0);
 
+const PurchaseList: React.FC<PurchaseListProps> = ({ purchases, totalSum }) => {
   return (
     <div className="bg-gray-100 rounded-lg">
       <h5 className="px-10 py-5 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">

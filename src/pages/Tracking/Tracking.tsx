@@ -8,8 +8,7 @@ import {
 } from "@react-google-maps/api";
 
 import { useState } from "react";
-import PurchaseSummary from "../../components/ui/organismos/PurchaseSummary/PurchaseSummary";
-import { purchaseListTestData } from "../Checkout/TestData";
+
 
 const Tracking = () => {
   const center = { lat: -12.084142196725567, lng: -76.9704611988532 };
@@ -61,8 +60,8 @@ const Tracking = () => {
         {/* Right side with data */}
         <div className="w-1/3 flex flex-col">
           {/* Top part with green background */}
-          <div className="bg-green-500 p-4 h-1/2 text-white">
-            <h2 className="text-xl font-bold mb-2">Información de la Orden</h2>
+          <div className="bg-[#468189] p-4 h-1/3 text-white">
+            <h2 className="text-xl font-bold mb-2">Estado de la Entega</h2>
             {/* Add your additional information here */}
             <p>Order #: XYZ123</p>
             <p>Estimated Time: 30 mins</p>
@@ -71,10 +70,9 @@ const Tracking = () => {
           {/* Bottom part with white background */}
           <div className="bg-white p-4 rounded-b-lg h-1/2">
             <div className="mb-4">
-              <h2 className="text-xl font-bold mb-2">Order Information</h2>
+              <h2 className="text-xl font-bold mb-2">Detalle de la Orden</h2>
               {/* Add more order-related information here */}
             </div>
-            <PurchaseSummary purchases={purchaseListTestData} />
             {/* Another component goes here */}
           </div>
         </div>
