@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
 import Button from '../../components/ui/atomos/Button/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUsuario } from '../../services/UserService';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    const navigate = useNavigate();  // Obtiene la función navigate
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            // La lógica del Api
-            // ...
+            const usuario = {
+                id: 18,
+                correo,
+                password,
+                nombre: '', // Add the required 'nombre' property
+                apellido: '', // Add the required 'apellido' property
+            };
 
+            const resultado = await loginUsuario(usuario);
+
+            // Verifica el resultado de la autenticación
+            if (resultado.success) {
+                // Inicio de sesión exitoso, redirige a la página principal
+                navigate('/');
+            } else {
+                // Maneja errores, muestra mensaje de error, etc.
+                setError(true);
+            }
         } catch (error) {
             setError(true);
         }
@@ -39,8 +56,8 @@ const Login = () => {
                             id="email"
                             placeholder="correo@gmail.com"
                             className="w-full p-2 border rounded"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={correo}
+                            onChange={(e) => setCorreo(e.target.value)}
                         />
                         <label className="block text-sm" htmlFor="email">Email address</label>
                     </div>
@@ -58,7 +75,7 @@ const Login = () => {
                     </div>
 
 
-                    <Button variant="primary" className="w-full p-2 rounded"> Login</Button>
+                    <Button variant="primary" type="submit" className="w-full p-2 rounded"> Login</Button>
 
                     <a className="text-xs text-gray-500" href="#!">Forgot password?</a>
                     <p className="text-sm text-teal-500">
@@ -70,7 +87,6 @@ const Login = () => {
 
 
             </div>
-            {error && <div className="error-message">Error: Usuario o contraseña incorrectos</div>}
         </section>
     );
 };

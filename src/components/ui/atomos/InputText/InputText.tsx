@@ -7,6 +7,7 @@ interface InputTextProps {
   placeholder?: string;
   value?: string;
   required?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Agregar prop onChange
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -16,6 +17,7 @@ const InputText: React.FC<InputTextProps> = ({
   placeholder,
   value,
   required = false,
+  onChange, // Agregar onChange
 }) => {
   return (
     <div className="mb-2 sm:mb-6">
@@ -29,6 +31,7 @@ const InputText: React.FC<InputTextProps> = ({
         placeholder={placeholder}
         value={value}
         required={required}
+        onChange={onChange} // Pasar onChange al input
       />
     </div>
   );
