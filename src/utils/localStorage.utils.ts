@@ -21,3 +21,7 @@ export const getTokenFromLocalStorage = () => {
     return null;
   }
 };
+
+export const removeTokenFromLocalStorage = () => {
+  localStorage.removeItem("user");
+}

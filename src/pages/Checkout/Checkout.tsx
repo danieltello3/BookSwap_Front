@@ -31,17 +31,19 @@ const Checkout = () => {
 
   };
 
+  const montoCompra = 110;
+  const nroOrden = 15;
   // Dummy function for form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add logic for form submission
     const body = {
       ip,
-      monto: 100
+      monto: montoCompra
     }
     const {sessionToken} = await getSessionToken(body);
     
-    openForm(sessionToken,100)
+    openForm(sessionToken,montoCompra,nroOrden)
     console.log("Form submitted!")
   };
 
@@ -119,8 +121,9 @@ const Checkout = () => {
               </div>
             </div>
 
+            <div className="flex mb-4">
             {/* Sección 3: Opciones de Pago */}
-            <div className="mb-4">
+            <div className="flex-1 mr-4">
               <p>Opciones de Pago:</p>
               <div className="flex items-center">
                 <input
@@ -178,6 +181,40 @@ const Checkout = () => {
                 </label>
               </div>
             </div>
+
+            {/* Sección 4: Opciones de Envío */}
+            <div className="flex-1">
+              <p>Opciones de Pago:</p>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="cash"
+                  name="paymentMethod"
+                  value="cash"
+                  checked={formData.paymentMethod === "normal"}
+                  onChange={handleInputChange}
+                />
+                <label htmlFor="cash" className="ml-2 flex items-center">
+                  <span className="mr-2">Normal</span>
+                </label>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="card"
+                  name="paymentMethod"
+                  value="card"
+                  checked={formData.paymentMethod === "express"}
+                  onChange={handleInputChange}
+                />
+                <label htmlFor="card" className="ml-2 flex items-center">
+                  <span className="mr-2">Express (+ S/. 3)</span>
+                </label>
+              </div>
+            </div>
+            </div>
+
 
             {/* Add more form fields as needed */}
           </div>
