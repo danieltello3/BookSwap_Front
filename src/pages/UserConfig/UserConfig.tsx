@@ -30,7 +30,7 @@ const UserConfig = () => {
             console.log('Imagen en base64:', base64Image);
     
             // Actualiza la imagen del usuario en el estado
-            setUsuario((prevUsuario) => ({ ...prevUsuario, imagen_url: base64Image }));
+            setUsuario((prevUsuario:any) => ({ ...prevUsuario, imagen_url: base64Image }));
           } catch (error) {
             console.error('Error al convertir la imagen a base64:', error);
           }

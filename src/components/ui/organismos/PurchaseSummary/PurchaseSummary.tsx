@@ -42,7 +42,7 @@ const PurchaseList: React.FC<PurchaseListProps> = ({ purchases, totalSum }) => {
 
         {/* Suma total de compra */}
         <div className="total-sum-section">
-          <p>Precio Total: ${totalSum.toFixed(2)}</p>
+          <p>Precio Total: S/ {totalSum.toFixed(2)}</p>
         </div>
       </div>
     </div>

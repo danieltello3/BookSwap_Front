@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { purchaseListTestData } from "./TestData";
-import { useJsApiLoader, Autocomplete, LoadScript } from "@react-google-maps/api";
+import {
+  useJsApiLoader,
+  Autocomplete,
+  LoadScript
+} from "@react-google-maps/api";
 import { getSessionToken, ipClient } from "../../services/PasarelaService";
 import { openForm } from "../../services/Niubiz";
+import BotonPago from "../../components/ui/organismos/BotonPago/BotonPago";
+import PurchaseSummary from "../../components/ui/organismos/PurchaseSummary/PurchaseSummary";
 
 const Checkout = () => {
-  const [ip, setIp] = useState('')
+  const [ip, setIp] = useState("");
+  const [totalSum, setTotalSum] = useState(50);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAZSCrn2s6_EXA-TJ3r8UVgT4xPNGCA5QI",
     libraries: ["places", "geometry"]
@@ -28,13 +35,14 @@ const Checkout = () => {
   const getIp = async () => {
     const ipResponse = await ipClient();
     setIp(ipResponse);
-  }
+  };
+
   useEffect(() => {
     getIp();
-  },[])
+  }, []);
 
   // Function to handle form input changes
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -48,31 +56,30 @@ const Checkout = () => {
     const place = autocomplete.current.getPlace();
     console.log(place);
 
-  
     const gMaps = window.google;
 
     if (!place.geometry) {
       console.error("Ubicación no cuenta con coordenadas");
       return;
     }
-  
+
     const formattedAddress = place.formatted_address || "";
     const { lat, lng } = place.geometry.location.toJSON();
-  
+
     // Calcular distancia entre las dos direcciones
-    formData.distancePayment = gMaps.maps.geometry.spherical.computeDistanceBetween(
-      new gMaps.maps.LatLng(testLocation.lat, testLocation.lng),
-      new gMaps.maps.LatLng(lat, lng)
-    ) / 1000;
-    
+    formData.distancePayment =
+      gMaps.maps.geometry.spherical.computeDistanceBetween(
+        new gMaps.maps.LatLng(testLocation.lat, testLocation.lng),
+        new gMaps.maps.LatLng(lat, lng)
+      ) / 1000;
+
     console.log(formData.distancePayment);
-  
+
     setFormData((prevFormData) => ({
       ...prevFormData,
-      address: formattedAddress,
+      address: formattedAddress
     }));
   };
-    
 
   const montoCompra = 120;
   const nroOrden = 16;
@@ -80,23 +87,36 @@ const Checkout = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add logic for form submission
-  };
-
-  const totalSum = purchaseListTestData.reduce((sum, purchase) => sum + purchase.price, 0)
-  + formData.distancePayment
-  + (formData.deliveryType === 'express' ? 3 : 0);
+    console.log(totalSum)
     const body = {
       ip,
-      monto: montoCompra
-    }
-    const {sessionToken} = await getSessionToken(body);
-    
-    openForm(sessionToken,montoCompra,nroOrden)
-    console.log("Form submitted!")
+      monto: Math.round(totalSum)
+    };
+    const { sessionToken } = await getSessionToken(body);
+
+    openForm(sessionToken, Math.round(totalSum), nroOrden);
+    console.log("Form submitted!");
   };
 
+  useEffect(() => {
+    if(formData.distancePayment > 0){
+      setTotalSum(
+        purchaseListTestData.reduce((sum, purchase) => sum + purchase.price, 0) +
+          formData.distancePayment +
+          (formData.deliveryType === "express" ? 3 : 0)
+      );
+    }
+  },[formData.distancePayment])
+
+  // const totalSum =
+  //   purchaseListTestData.reduce((sum, purchase) => sum + purchase.price, 0) +
+  //   formData.distancePayment +
+  //   (formData.deliveryType === "express" ? 3 : 0);
+
   return (
-    <form className="min-h-screen grid grid-cols-12 gap-4 bg-[#C0EAE6]" onSubmit={handleSubmit} >
+    <form
+      className="min-h-screen grid grid-cols-12 gap-4 bg-[#C0EAE6]"
+      onSubmit={handleSubmit}>
       {/* Lado derecho (Formulario) */}
       <div className="col-span-8 p-6">
         <div className="bg-gray-100 rounded-lg">
@@ -148,23 +168,23 @@ const Checkout = () => {
             <div className="flex mb-5">
               <div className="flex-1 mr-4">
                 <label htmlFor="address">Dirección:</label>
-                {isLoaded ?(
-                <Autocomplete
-                onLoad={(auto) => (autocomplete.current = auto)}
-                onPlaceChanged={() => onPlaceChanged()}>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border"
-                  // required
-                />
-              </Autocomplete>
-              ) : (
-                <div>Cargando...</div>
-              )}
+                {isLoaded ? (
+                  <Autocomplete
+                    onLoad={(auto) => (autocomplete.current = auto)}
+                    onPlaceChanged={() => onPlaceChanged()}>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      className="w-full p-2 border"
+                      // required
+                    />
+                  </Autocomplete>
+                ) : (
+                  <div>Cargando...</div>
+                )}
               </div>
               <div className="flex-1">
                 <label htmlFor="reference">Referencia: (Opcional)</label>
@@ -285,7 +305,7 @@ const Checkout = () => {
             totalSum={totalSum}
           />
         </div>
-        <BotonPago type="submit" className="w-full" ip={ip}/>
+        <BotonPago type="submit" className="w-full" ip={ip} />
       </div>
     </form>
   );
