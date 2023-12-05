@@ -8,5 +8,6 @@ export const obtenerComboCategorias = async () => {
     id: item.id,
     nombre: item.name
   })) 
+  
   return adapter;
 }

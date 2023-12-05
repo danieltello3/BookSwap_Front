@@ -20,12 +20,11 @@ export const obtenerLibros = async () => {
         apellido: item.vendedor.apellido,
         ubicacion: item.vendedor.ubicacion,
       }
- 
     })) 
     return adapter;
   }
 
-  export const obtenerLibro = async (libroId: number) => {
+export const obtenerLibro = async (libroId: number) => {
 
     const { data } = await api.LIBRO.obtenerLibro(libroId);
 
@@ -40,6 +39,7 @@ export const obtenerLibros = async () => {
       estado: data.content.estado,
       editorial: data.content.editorial,
       idioma:data.content.idioma,
+      ISBN:data.content.isbn,
       numero_paginas:data.content.numero_paginas,
       autor: data.content.autor,
       precio: data.content.precio,
@@ -56,4 +56,33 @@ export const obtenerLibros = async () => {
 
     return adapter;
 
-  };
+};
+
+export const obtenerLibrosPorCategoria = async (categoriaId: number) => {
+  const { data } = await api.LIBRO.obtenerLibrosPorCategoria(categoriaId);
+
+  if (!data.content) {
+    return null;
+  }
+
+  const adapter: Book[] = data.content.map((item:any)=>({
+    id:item.id,
+    titulo:item.titulo,
+    categoria:item.categoria,
+    estado:item.estado_libro,
+    editorial:item.editorial,
+    autor:item.autor,
+    precio:item.precio,
+    imagen_url: item.imagen[0].url,
+    encuadernacion:item.encuadernacion,
+    sinopsis:item.sinopsis,
+    vendedor: {
+      id: item.vendedor.id,
+      nombre: item.vendedor.nombre,
+      apellido: item.vendedor.apellido,
+      ubicacion: item.vendedor.direccion.distrito,
+    }
+  })) 
+
+  return adapter;
+}

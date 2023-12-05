@@ -17,7 +17,7 @@ export const api = {
   LIBRO:{
     //Retorna los libros que encontré por cada categoría
     obtenerLibros: (): Promise<AxiosResponse> => axiosInstance.get("libros"),
-    librosPorCategoria: (categoriaId: number): Promise<AxiosResponse> => axiosInstance.get(`libros/${categoriaId}`), 
+    obtenerLibrosPorCategoria: (categoriaId: number): Promise<AxiosResponse> => axiosInstance.get(`categoria/${categoriaId}`), 
     obtenerLibro: (libroId: number): Promise<AxiosResponse> => axiosInstance.get(`libro/${libroId}`)
   },
   USUARIO: {

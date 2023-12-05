@@ -36,7 +36,7 @@ const Home = () => {
           }}></div>
         <div className="flex flex-col gap-4">
           <h1 className="font-bold text-2xl">Destacados</h1>
-          <div className="flex gap-4 p-4">
+          <div className="flex flex-wrap gap-4 p-4">
             {libros.map((libro) => (
               <BookCard book={libro} key={libro.id}/>
             ))}

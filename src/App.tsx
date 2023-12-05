@@ -17,6 +17,7 @@ import Publicate from "./pages/BookPublicate/Publicate";
 import Checkout from "./pages/Checkout/Checkout";
 import Tracking from "./pages/Tracking/Tracking";
 import RespuestaPago from "./pages/RespuestaPago/RespuestaPago";
+import BookCategory from "./pages/BookCategory/BookCategory";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/bookdetails/:id" Component={BookDetails} />
         <Route path="/listadedeseos" Component={ListaDeDeseos} />
         <Route path="/login" Component={Login} />
+        <Route path="/categoria/:id" Component={BookCategory} />
         <Route path="/register" Component={Register} />
         <Route path="/userConfig" Component={UserConfig}/>
         <Route path="/chat" Component={Chat} />

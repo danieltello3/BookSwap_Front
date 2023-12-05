@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { obtenerLibro } from "../../services/BookService";
 
 const BookDetails = () => {
+
   const { id } = useParams();
   const [book, setBook] = useState({});
 
@@ -49,10 +50,10 @@ const BookDetails = () => {
             <div className="flex flex-col w-4/6 gap-5 p-5">
               <h1 className="text-4xl font-extrabold leading-none 
                               tracking-tight text-gray-900 md:text-5xl 
-                              lg:text-6xl dark:text-white font-['Georgia']">{book.titulo}</h1>
+                              lg:text-6xl font-['Georgia']">{book.titulo}</h1>
               <div className="flex mb-10">
-                <p className="text-2xl font-extralight text-gray-900 dark:text-white font-['Georgia']">{book.autor}</p> 
-                <p className="text-2xl font-extralight text-gray-900 dark:text-white font-['Georgia']">&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;</p>
+                <p className="text-2xl font-extralight text-gray-900 font-['Georgia']">{book.autor}</p> 
+                <p className="text-2xl font-extralight text-gray-900 font-['Georgia']">&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;</p>
                 <p className="text-2xl font-extralight text-blue-300 font-['Georgia']">EDITORIAL {book.editorial}</p> 
               </div>
               <div className="text-3xl font-extrabold leading-none 
